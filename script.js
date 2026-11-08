@@ -70,15 +70,34 @@ function animate() {
 setInterval(launchFirework, 850);
 animate();
 
-// Personalized wishes
-document.getElementById("wishBtn").addEventListener("click", () => {
-    const name = document.getElementById("friend").value.trim();
+// Personalized Diwali Greeting
+function showWish(name) {
+    const friendName = name.trim();
 
     document.getElementById("personal").textContent =
-        name
-        ? "Happy Diwali, " + name + " ❤️"
-        : "To My Dear Friends ❤️";
+        friendName
+        ? `Happy Diwali, ${friendName}! 🪔❤️`
+        : "Happy Diwali, My Dear Friend! ❤️";
+
+    document.getElementById("sender").textContent =
+        "From Rahul Kumar ❤️";
+
+    document.getElementById("nameForm").style.display = "none";
 
     launchFirework();
     launchFirework();
-});
+}
+
+// Read friend's name from the link
+const params = new URLSearchParams(window.location.search);
+const friendFromLink = params.get("name");
+
+if (friendFromLink && friendFromLink.trim()) {
+    showWish(friendFromLink);
+} else {
+    // Allow manual name entry if no personalized link is used
+    document.getElementById("wishBtn").addEventListener("click", () => {
+        const name = document.getElementById("friend").value;
+        showWish(name);
+    });
+}
